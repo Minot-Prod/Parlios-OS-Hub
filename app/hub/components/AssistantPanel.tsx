@@ -1,49 +1,77 @@
 ﻿"use client";
-import React, { useState } from "react";
+
+import { useState } from "react";
+
+type Message = {
+  id: number;
+  from: "user" | "agent";
+  text: string;
+};
 
 export default function AssistantPanel() {
-  console.log("🔥 AssistantPanel MONTÉ !");
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: 1,
+      from: "agent",
+      text: "Hub chargé. Prêt à router tes demandes vers les agents Parlios.",
+    },
+  ]);
+  const [input, setInput] = useState("");
 
-  const [prompt, setPrompt] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState("");
-
-  async function runPrompt() {
-    if (!prompt.trim()) return;
-    try {
-      setLoading(true);
-      setResponse("");
-      const res = await fetch("/api/agent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt }),
-      });
-      const data = await res.json();
-      setResponse(data.reply || "(Pas de réponse)");
-    } catch (e) {
-      setResponse("Erreur lors de l'appel à l'agent.");
-    } finally {
-      setLoading(false);
-    }
-  }
+  const send = () => {
+    if (!input.trim()) return;
+    const nextId = messages.length ? messages[messages.length - 1].id + 1 : 1;
+    setMessages((m) => [
+      ...m,
+      { id: nextId, from: "user", text: input.trim() },
+      {
+        id: nextId + 1,
+        from: "agent",
+        text:
+          "Requête reçue. (Mock) L’Ultimate Agent route ça vers le bon agent. " +
+          "Ce bloc sera plus tard connecté à l’API Parlios.",
+      },
+    ]);
+    setInput("");
+  };
 
   return (
-    <div className="glass section assistant">
-      <h3>Assistant central</h3>
+    <section className="hub-card hub-card-assistant">
+      <header className="hub-card-header">
+        <div>
+          <h2 className="hub-title-sm">Assistant central</h2>
+          <p className="hub-subtitle-sm">
+            Point d’entrée unique vers les agents. Plus tard relié à l’API Hub.
+          </p>
+        </div>
+      </header>
 
-      <textarea
-        value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
-        placeholder="Décris ton objectif, le Hub orchestre les agents..."
-      />
-
-      <button type="button" onClick={runPrompt}>
-        {loading ? "UA en cours..." : "Lancer"}
-      </button>
-
-      <div style={{ marginTop: "12px", color: "cyan" }}>
-        {response}
+      <div className="assistant-messages">
+        {messages.map((m) => (
+          <div
+            key={m.id}
+            className={
+              "assistant-message assistant-message-" +
+              (m.from === "user" ? "user" : "agent")
+            }
+          >
+            <p>{m.text}</p>
+          </div>
+        ))}
       </div>
-    </div>
+
+      <div className="assistant-input-row">
+        <input
+          className="assistant-input"
+          placeholder="Décris une action à déléguer aux agents…"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && send()}
+        />
+        <button className="assistant-send" type="button" onClick={send}>
+          Envoyer
+        </button>
+      </div>
+    </section>
   );
 }
