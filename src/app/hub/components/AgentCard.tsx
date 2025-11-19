@@ -1,14 +1,27 @@
-﻿import React from "react";
-import AgentAvatar from "./AgentAvatar";
-type Props = { id: string; label: string; role: string; status?: "idle" | "thinking" | "running" | "success" | "error"; avatar?: string };
-export default function AgentCard({ id, label, role, status = "idle", avatar = "avatar-cyan.svg" }: Props) {
+﻿import AgentAvatar from "./AgentAvatar";
+import MicroFeedback from "./MicroFeedback";
+
+export type Agent = {
+  id: string;
+  name: string;
+  role: string;
+  status: "idle" | "running" | "error" | "disabled";
+  color?: "amber" | "cyan" | "green" | "purple" | "red" | "white";
+};
+
+export default function AgentCard({ agent }: { agent: Agent }) {
   return (
-    <div className="agent-card">
-      <AgentAvatar variant={avatar} />
-      <div>
-        <div><strong>{label}</strong> <span style={{ opacity: .6 }}>({role})</span></div>
-        <div className="agent-status">{status}</div>
+    <article className="agent-card">
+      <div className="agent-card-main">
+        <AgentAvatar name={agent.name} color={agent.color} />
+        <div className="agent-card-text">
+          <div className="agent-card-name">{agent.name}</div>
+          <div className="agent-card-role">{agent.role}</div>
+        </div>
       </div>
-    </div>
+      <div className="agent-card-footer">
+        <MicroFeedback status={agent.status} />
+      </div>
+    </article>
   );
 }

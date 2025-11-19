@@ -1,40 +1,27 @@
-﻿import React from "react";
-import Sidebar from "./components/Sidebar";
-import AssistantPanel from "./components/AssistantPanel";
+﻿import Cockpit from "./components/Cockpit";
 import AgentGrid from "./components/AgentGrid";
-import Cockpit from "./components/Cockpit";
+import AssistantPanel from "./components/AssistantPanel";
 import Timeline from "./components/Timeline";
-import MicroFeedback from "./components/MicroFeedback";
 
 export default function HubPage() {
+  const kpis = [
+    { label: "Agents actifs", value: 4, trend: "+2", tone: "good" },
+    { label: "Requêtes / 24h", value: 128, trend: "+37%", tone: "neutral" },
+    { label: "Succès automations", value: "93%", trend: "+4%", tone: "good" },
+    { label: "Erreurs critiques", value: 1, trend: "-2", tone: "bad" },
+  ];
+
   return (
-    <div className="hub-grid">
-      <Sidebar />
-      <main style={{ display: "grid", gap: 16 }}>
-        <div className="glass section kpi">
-          <div className="card">
-            <div>Latency</div>
-            <strong>142 ms</strong>
-          </div>
-          <div className="card">
-            <div>Tokens/min</div>
-            <strong>58k</strong>
-          </div>
-          <div className="card">
-            <div>Agents actifs</div>
-            <strong>6</strong>
-          </div>
-        </div>
-
-        <AssistantPanel />
+    <div className="hub-main-grid">
+      <section className="hub-col-left">
+        <Cockpit kpis={kpis} />
         <AgentGrid />
-        <MicroFeedback />
-      </main>
+      </section>
 
-      <aside style={{ display: "grid", gap: 16 }}>
-        <Cockpit />
+      <section className="hub-col-right">
+        <AssistantPanel />
         <Timeline />
-      </aside>
+      </section>
     </div>
   );
 }
