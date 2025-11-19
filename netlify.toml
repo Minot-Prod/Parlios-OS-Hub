@@ -1,10 +1,6 @@
-[build]
+﻿[build]
   command = "npm run build"
   publish = ".next"
 
-<<<<<<< HEAD
 [[plugins]]
-=======
-[plugins]
->>>>>>> feature/hub-ui
   package = "@netlify/plugin-nextjs"
