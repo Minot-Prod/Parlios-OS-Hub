@@ -1,0 +1,3 @@
+[submodule "lab"]
+	path = lab
+	url = https://github.com/Minot-Prod/Parlios-Intelligence-Lab.git
