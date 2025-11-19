@@ -1,6 +1,10 @@
 ﻿type Status = "idle" | "running" | "error" | "disabled";
 
-export default function MicroFeedback({ status }: { status: Status }) {
+type MicroFeedbackProps = {
+  status?: Status;
+};
+
+export default function MicroFeedback({ status = "idle" }: MicroFeedbackProps) {
   const label =
     status === "running"
       ? "En cours"

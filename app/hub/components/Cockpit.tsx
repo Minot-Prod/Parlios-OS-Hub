@@ -1,47 +1,28 @@
-﻿type Kpi = {
-  label: string;
-  value: string | number;
-  trend?: string;
-  tone?: "good" | "bad" | "neutral";
-};
+﻿import React from "react";
 
-export default function Cockpit({ kpis }: { kpis: Kpi[] }) {
+export default function Cockpit() {
   return (
-    <section className="hub-card hub-card-cockpit">
-      <header className="hub-card-header">
-        <div>
-          <h1 className="hub-title">Cockpit Parlios</h1>
-          <p className="hub-subtitle">
-            Vue synthèse des agents, des requêtes et de la stabilité du système.
-          </p>
-        </div>
-        <div className="hub-label-live">
-          <span className="hub-dot-live" />
-          <span>Live</span>
-        </div>
+    <section className="glass section cockpit">
+      <header style={{ marginBottom: 12 }}>
+        <h2>Cockpit Parlios</h2>
+        <p style={{ fontSize: 12, opacity: 0.7 }}>
+          Vue d’ensemble des opérations IA (placeholder, version statique).
+        </p>
       </header>
 
-      <div className="hub-kpi-grid">
-        {kpis.map((kpi) => (
-          <article key={kpi.label} className="hub-kpi-card">
-            <div className="hub-kpi-label">{kpi.label}</div>
-            <div className="hub-kpi-value">{kpi.value}</div>
-            {kpi.trend && (
-              <div
-                className={
-                  "hub-kpi-trend " +
-                  (kpi.tone === "good"
-                    ? "hub-kpi-trend-good"
-                    : kpi.tone === "bad"
-                    ? "hub-kpi-trend-bad"
-                    : "")
-                }
-              >
-                {kpi.trend}
-              </div>
-            )}
-          </article>
-        ))}
+      <div style={{ display: "grid", gap: 8 }}>
+        <div className="card">
+          <div>Dernier déploiement</div>
+          <strong>Netlify · OK</strong>
+        </div>
+        <div className="card">
+          <div>Statut Hub</div>
+          <strong>Stable</strong>
+        </div>
+        <div className="card">
+          <div>Mode</div>
+          <strong>Preview</strong>
+        </div>
       </div>
     </section>
   );
