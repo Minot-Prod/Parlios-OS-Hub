@@ -1,12 +1,15 @@
-﻿import '../hub/styles/theme.css';
-import React from 'react';
+﻿import "../globals.css";
+import "./styles/theme.css";
+import type { ReactNode } from "react";
 
-export const metadata = { title: 'Parlios OS Hub', description: 'Cockpit multi-agents — Parlios' };
+export const metadata = {
+  title: "Parlios Hub",
+  description: "Hub IA Parlios",
+};
 
-export default function HubLayout({ children }: { children: React.ReactNode }) {
+export default function HubLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="hub-bg">
-      <div className="grid-overlay"></div>
+    <div className="hub-wrapper">
       {children}
     </div>
   );

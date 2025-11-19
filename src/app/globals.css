@@ -1,0 +1,26 @@
+﻿/* Reset minimal */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Background Parlios */
+body {
+  background: #05030a;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+/* Simple class for Hub layout */
+.glass {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.section {
+  margin: 20px auto;
+  max-width: 1200px;
+}
